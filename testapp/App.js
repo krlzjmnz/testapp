@@ -1,18 +1,22 @@
 import React, {useState} from 'react'
-import {Button} from 'react-native'
+import  {View, Text , TextInput} from 'react-native'
 
-function CounterButton ({title, onIncrement}){
-  return <Button title={title} onPress={onIncrement}/>
-}
+export default function App(){
+  const [text, setText]=useState('')
 
-function App(){
-  const [count, setCount] = useState(0)
-
-  return(
-    <CounterButton 
-    title={`Clik aqui para incrementar....:${count}`}
-    onIncrement={()=>setCount(count+1)}/>
+  return (
+    <View>
+      <TextInput
+        value={text}
+        style={{fontSize:42, color:'steelblue'}}
+        placeholder="type here"
+        onChangeText={(text)=>{
+          setText(text)
+        }}
+      />
+      <Text style={{fontSize:24}}>
+      {'\n'}you entered: {text}
+      </Text>
+    </View>
   )
 }
-
-export default App
