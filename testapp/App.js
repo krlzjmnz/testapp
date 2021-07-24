@@ -1,22 +1,26 @@
-import React, {useState} from 'react'
-import  {View, Text , TextInput} from 'react-native'
+import React, { memo, useState } from 'react'
+import { Button, Text } from 'react-native'
 
-export default function App(){
-  const [text, setText]=useState('')
+function Label({ title }) {
+  console.log(`Rendered: ${title}`)
+  return <Text>{title}</Text>
+}
+
+const LabelMemo = memo(Label)
+
+export default function App() {
+  const [count, setCount] = useState(0)
 
   return (
-    <View>
-      <TextInput
-        value={text}
-        style={{fontSize:42, color:'steelblue'}}
-        placeholder="type here"
-        onChangeText={(text)=>{
-          setText(text)
+    <>
+      <Button
+        title={`Pressed ${count} times`}
+        onPress={() => {
+          setCount(count + 1)
         }}
       />
-      <Text style={{fontSize:24}}>
-      {'\n'}you entered: {text}
-      </Text>
-    </View>
+      <Label title="Label with memo" />
+      <Label title="Label" />
+    </>
   )
 }
