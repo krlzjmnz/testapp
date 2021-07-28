@@ -1,26 +1,41 @@
-import React, { memo, useState } from 'react'
-import { Button, Text } from 'react-native'
+import React, { useReducer } from 'react'
+import { View, Text, TextInput } from 'react-native'
 
-function Label({ title }) {
-  console.log(`Rendered: ${title}`)
-  return <Text>{title}</Text>
+
+function reducer(state, action) {
+    switch (action.type) {
+      case 'first':
+        return {...state, first: action.value}
+    
+      case 'last':
+        return {...state, last:action.value}
+    }
 }
 
-const LabelMemo = memo(Label)
+export default function App(){
+  const [state, dispatch]= useReducer(reducer, {first:'', last:''} )
 
-export default function App() {
-  const [count, setCount] = useState(0)
+return(
+  <View>
+    <TextInput
+      style={{fontSize: 32}}
+      placeholder="First"
+      value={state.first}
+      onChangeText={(text)=>{
+        dispatch({type:'first', value: text})
+      }}
+    />
+    <TextInput
+      style={{fontSize:32}}
+      placeholder="Last"
+      value={state.last}
+      onChangeText={(text)=>{
+        dispatch({type:'last',value:text})
+      }}/>
+    <Text style={{fontSize:32}}>
+      hello {state.first} {state.last}
+    </Text>
+  </View>
+)
 
-  return (
-    <>
-      <Button
-        title={`Pressed ${count} times`}
-        onPress={() => {
-          setCount(count + 1)
-        }}
-      />
-      <Label title="Label with memo" />
-      <Label title="Label" />
-    </>
-  )
 }
